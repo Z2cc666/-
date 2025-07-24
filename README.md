@@ -41,15 +41,22 @@ python3 -m http.server 5500
 ### 3. 打开可视化页面
 在浏览器访问：
 ```
-http://127.0.0.1:5500/case03/index.html
+http://127.0.0.1:5500
 ```
+### 页面演示
+<img width="1470" height="876" alt="截屏2025-07-24 上午10 28 15" src="https://github.com/user-attachments/assets/aeb049fb-16da-4e2c-becb-d049df5e774d" />
+/case03/index.html
 
 ### 4. 交互说明
 - 城市选择支持多选，支持 Select2 搜索
 - 可按区域、评分、品牌等过滤
 - 支持地图点聚合、热力图切换
-- 支持多种统计图表展示
-
+- 支持多种统计
+图表展示
+<img width="294" height="325" alt="截屏2025-07-24 上午10 28 57" src="https://github.com/user-attachments/assets/deef9437-4fb5-4b7c-a10e-92fce63ca4d1" />
+<img width="291" height="646" alt="截屏2025-07-24 上午10 28 43" src="https://github.com/user-attachments/assets/9d2b2f7c-1fe5-4346-b4c0-91a25c3585b4" />
+<img width="273" height="326" alt="截屏2025-07-24 上午10 28 34" src="https://github.com/user-attachments/assets/294c2e0a-20ea-4717-9299-7bcb9dd06f6c" />
+<img width="233" height="254" alt="截屏2025-07-24 上午10 28 27" src="https://github.com/user-attachments/assets/b8b4c4e8-591c-45f8-b7dd-55ffe14ff8b5" />
 ## 依赖说明
 - [jQuery 3.6+](https://code.jquery.com/)
 - [Select2 4.1+](https://select2.org/)
