@@ -1,0 +1,1481 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<meta charset="utf-8" />
+	    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+    <title>广东省咖啡店分布地图</title>
+    
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
+    <!-- Select2 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    
+    <!-- Select2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/i18n/zh-CN.js"></script>
+    
+    <!-- 其他样式和脚本 -->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            height: 100vh;
+            overflow: hidden;
+        }
+        
+        .header {
+            background: rgba(0,0,0,0.3);
+            padding: 15px 0;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .header h3 {
+            font-size: 24px;
+            font-weight: 600;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .container {
+            display: flex;
+            height: calc(100vh - 80px);
+        }
+        
+        .map-container {
+            flex: 1;
+            position: relative;
+            background: rgba(0,0,0,0.1);
+        }
+
+        .stats-panel {
+            width: 400px;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            overflow-y: auto;
+            border-left: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .chart-container {
+            background: rgba(0,0,0,0.3);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .chart-title {
+            color: #FFD700;
+            font-size: 16px;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .chart {
+            width: 100%;
+            height: 200px;
+        }
+
+        .search-box {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 100;
+            background: rgba(0,0,0,0.7);
+            padding: 15px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+            width: 300px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 5px;
+            background: rgba(255,255,255,0.9);
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .filter-group {
+            margin-bottom: 10px;
+        }
+
+        .filter-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #FFD700;
+            font-size: 14px;
+        }
+
+        .filter-select {
+            width: 100%;
+            padding: 6px 10px;
+            border: none;
+            border-radius: 5px;
+            background: rgba(255,255,255,0.9);
+            font-size: 13px;
+        }
+
+        .ranking-panel {
+            background: rgba(0,0,0,0.3);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .ranking-panel h4 {
+            color: #FFD700;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .ranking-item {
+            padding: 8px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            font-size: 13px;
+        }
+
+        .ranking-item:last-child {
+            border-bottom: none;
+        }
+
+        .ranking-name {
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .ranking-rating {
+            color: #FFD700;
+            float: right;
+        }
+
+        .controls {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            z-index: 100;
+            display: flex;
+            gap: 10px;
+        }
+        
+        .control-btn {
+            background: rgba(255,255,255,0.9);
+            color: #333;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+        
+        .control-btn:hover {
+            background: rgba(255,255,255,1);
+            transform: translateY(-2px);
+        }
+        
+        .stats {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            background: rgba(0,0,0,0.7);
+            padding: 15px 20px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+            z-index: 100;
+        }
+        
+        .stats h4 {
+            margin-bottom: 10px;
+            color: #FFD700;
+        }
+        
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+        
+        .loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0,0,0,0.8);
+            padding: 20px 40px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            text-align: center;
+        }
+        
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #ffffff;
+            border-radius: 50%;
+            border-top-color: transparent;
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 10px;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* 响应式布局 */
+        @media (max-width: 1200px) {
+            .container {
+                flex-direction: column;
+            }
+            
+            .stats-panel {
+                width: 100%;
+                height: 300px;
+                border-left: none;
+                border-top: 1px solid rgba(255,255,255,0.1);
+            }
+            
+            .map-container {
+                height: calc(100vh - 380px);
+            }
+        }
+
+        .city-select {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 100;
+            background: rgba(0,0,0,0.7);
+            padding: 15px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+            width: 300px;
+        }
+
+        .city-select select {
+            width: 100%;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 5px;
+            background: rgba(255,255,255,0.9);
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .comparison-chart {
+            background: rgba(0,0,0,0.3);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .comparison-title {
+            color: #FFD700;
+            font-size: 16px;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .brand-comparison {
+            width: 100%;
+            height: 300px;
+            margin-bottom: 20px;
+        }
+
+        /* Select2 自定义样式 */
+        .select2-container {
+            width: 100% !important;
+        }
+        
+        .select2-container--default .select2-selection--multiple {
+            background-color: rgba(255,255,255,0.9);
+            border: none;
+            border-radius: 5px;
+        }
+        
+        .select2-container--default .select2-selection--multiple .select2-selection__choice {
+            background-color: #764ba2;
+            border: 1px solid #667eea;
+            color: white;
+            border-radius: 15px;
+            padding: 2px 8px;
+        }
+        
+        .select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
+            color: white;
+            margin-right: 5px;
+        }
+        
+        .select2-container--default .select2-selection--multiple .select2-selection__choice__remove:hover {
+            color: #FFD700;
+        }
+        
+        .select2-dropdown {
+            background-color: rgba(255,255,255,0.95);
+            border: none;
+            border-radius: 5px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .select2-container--default .select2-results__option--highlighted[aria-selected] {
+            background-color: #764ba2;
+        }
+        
+        .select2-container--default .select2-search--inline .select2-search__field {
+            color: #333;
+        }
+
+        /* 让下拉选项背景和字体更清晰 */
+        .select2-container--default .select2-results__option {
+            background-color: #fff;
+            color: #333;
+        }
+
+        /* 鼠标悬停/选中时高亮 */
+        .select2-container--default .select2-results__option--highlighted[aria-selected] {
+            background-color: #764ba2;
+            color: #fff;
+        }
+
+        /* 已选中的tag样式 */
+        .select2-container--default .select2-selection--multiple .select2-selection__choice {
+            background-color: #764ba2;
+            color: #fff;
+            border: 1px solid #fff;
+        }
+
+        /* 让下拉面板有阴影和圆角 */
+        .select2-dropdown {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+        }
+
+        /* 让输入框和下拉面板的字体更大更清晰 */
+        .select2-container--default .select2-selection--multiple,
+        .select2-container--default .select2-search--inline .select2-search__field {
+            font-size: 16px;
+            color: #333;
+        }
+        .select2-container {
+            min-width: 220px !important;
+        }
+    </style>
+	</head>
+	
+<body>
+    <div class="header">
+        <h3>广东省咖啡店分布地图</h3>
+    </div>
+    
+    <div class="container">
+        <div class="map-container">
+            <div id="loading" class="loading">
+                <div class="loading-spinner"></div>
+                正在加载地图数据...
+            </div>
+
+            <div class="search-box">
+                <input type="text" id="searchInput" class="search-input" placeholder="搜索咖啡店名称或地址...">
+                
+                <div class="filter-group">
+                    <label>选择城市（可多选）</label>
+                    <select id="citySelect" multiple="multiple" class="filter-select">
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label>区域</label>
+                    <select id="districtFilter" class="filter-select">
+                        <option value="">全部区域</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label>评分</label>
+                    <select id="ratingFilter" class="filter-select">
+                        <option value="">全部评分</option>
+                        <option value="4.5">4.5分以上</option>
+                        <option value="4.0">4.0分以上</option>
+                        <option value="3.5">3.5分以上</option>
+                        <option value="3.0">3.0分以上</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label>品牌</label>
+                    <select id="brandFilter" class="filter-select">
+                        <option value="">全部品牌</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="controls">
+                <button class="control-btn" onclick="toggleView()">切换视图</button>
+                <button class="control-btn" onclick="resetZoom()">重置缩放</button>
+                <button class="control-btn" onclick="toggleCluster()">切换聚类</button>
+                <button class="control-btn" onclick="toggleHeatmap()">切换热力图</button>
+            </div>
+            
+            <div class="stats">
+                <h4>统计信息</h4>
+                <div class="stat-item">
+                    <span>咖啡店总数:</span>
+                    <span id="total-count">0</span>
+                </div>
+                <div class="stat-item">
+                    <span>平均评分:</span>
+                    <span id="avg-rating">0.0</span>
+                </div>
+                <div class="stat-item">
+                    <span>最高评分:</span>
+                    <span id="max-rating">0.0</span>
+					</div>
+                <div class="stat-item">
+                    <span>品牌占比:</span>
+                    <span id="brand-ratio">0%</span>
+							</div>
+						</div>
+            
+            <div id="mapContainer" style="width: 100%; height: 100%;"></div>
+        </div>
+
+        <div class="stats-panel">
+            <div class="ranking-panel">
+                <h4>评分排行榜</h4>
+                <div id="rankingList"></div>
+            </div>
+
+            <div class="chart-container">
+                <div class="chart-title">评分分布</div>
+                <div id="ratingChart" class="chart"></div>
+							</div>
+
+            <div class="chart-container">
+                <div class="chart-title">区域分布</div>
+                <div id="districtChart" class="chart"></div>
+						</div>
+
+            <div class="chart-container">
+                <div class="chart-title">品牌分布</div>
+                <div id="brandChart" class="chart"></div>
+					</div>
+
+            <div class="comparison-chart">
+                <div class="comparison-title">城市咖啡文化指数</div>
+                <div id="cityComparisonChart" class="brand-comparison"></div>
+				</div>
+			</div>
+		</div>
+		
+    <!-- 加载基础库 -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/echarts/5.4.3/echarts.min.js"></script>
+    <script src="https://api.map.baidu.com/api?v=3.0&ak=nSxiPohfziUaCuONe4ViUP2N"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/echarts/5.4.3/extension/bmap.min.js"></script>
+    
+    <script>
+        let mapChart;
+        let bmap;
+        let currentView = 'normal';
+        let allData = [];
+        let currentCity = '';
+        let isClusterEnabled = false;
+        let isHeatmapEnabled = false;
+        let ratingChart;
+        let districtChart;
+        let brandChart;
+        let cityComparisonChart;
+
+        // 初始化统计图表
+        function initializeCharts() {
+            // 初始化评分分布图
+            ratingChart = echarts.init(document.getElementById('ratingChart'));
+            
+            // 初始化区域分布图
+            districtChart = echarts.init(document.getElementById('districtChart'));
+            
+            // 初始化品牌分布图
+            brandChart = echarts.init(document.getElementById('brandChart'));
+
+            // 初始化城市比较图表
+            cityComparisonChart = echarts.init(document.getElementById('cityComparisonChart'));
+        }
+
+        // 更新评分分布图
+        function updateRatingChart(data) {
+            const ratingGroups = {
+                '5分': 0,
+                '4-4.9分': 0,
+                '3-3.9分': 0,
+                '2-2.9分': 0,
+                '2分以下': 0
+            };
+
+            data.forEach(item => {
+                const rating = item.value[2];
+                if (rating >= 5) ratingGroups['5分']++;
+                else if (rating >= 4) ratingGroups['4-4.9分']++;
+                else if (rating >= 3) ratingGroups['3-3.9分']++;
+                else if (rating >= 2) ratingGroups['2-2.9分']++;
+                else ratingGroups['2分以下']++;
+            });
+
+            const option = {
+                tooltip: {
+                    trigger: 'item',
+                    formatter: '{b}: {c} ({d}%)'
+                },
+                legend: {
+                    orient: 'vertical',
+                    right: 10,
+                    top: 'center',
+                    textStyle: {
+                        color: '#fff'
+			            }
+			        },
+			        series: [{
+                    name: '评分分布',
+                    type: 'pie',
+                    radius: ['40%', '70%'],
+                    avoidLabelOverlap: false,
+                    itemStyle: {
+                        borderRadius: 10,
+                        borderColor: '#fff',
+                        borderWidth: 2
+                    },
+                    label: {
+                        show: false,
+                        position: 'center'
+                    },
+                    emphasis: {
+                        label: {
+                            show: true,
+                            fontSize: '20',
+                            fontWeight: 'bold'
+                        }
+                    },
+                    labelLine: {
+                        show: false
+                    },
+                    data: Object.entries(ratingGroups).map(([name, value]) => ({
+                        name,
+                        value,
+                        itemStyle: {
+                            color: name === '5分' ? '#FFD700' :
+                                   name === '4-4.9分' ? '#FFA500' :
+                                   name === '3-3.9分' ? '#87CEEB' :
+                                   name === '2-2.9分' ? '#98FB98' :
+                                   '#FF6B6B'
+                        }
+                    }))
+                }]
+            };
+
+            ratingChart.setOption(option);
+        }
+
+        // 更新区域分布图
+        function updateDistrictChart(data) {
+            const districtCount = {};
+            data.forEach(item => {
+                districtCount[item.district] = (districtCount[item.district] || 0) + 1;
+            });
+
+            const sortedDistricts = Object.entries(districtCount)
+                .sort((a, b) => b[1] - a[1])
+                .slice(0, 10);
+
+            const option = {
+					tooltip: {
+                    trigger: 'axis',
+                    axisPointer: {
+                        type: 'shadow'
+                    }
+				   },
+				    grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+				    },
+				    xAxis: {
+                    type: 'value',
+                    axisLabel: {
+                        color: '#fff'
+                    },
+                    splitLine: {
+                        lineStyle: {
+                            color: 'rgba(255,255,255,0.1)'
+                        }
+				        }
+				    },
+				    yAxis: {
+				        type: 'category',
+                    data: sortedDistricts.map(item => item[0]),
+                    axisLabel: {
+                        color: '#fff'
+                    }
+                },
+                series: [{
+                    name: '咖啡店数量',
+                    type: 'bar',
+                    data: sortedDistricts.map(item => ({
+                        value: item[1],
+                        itemStyle: {
+                            color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [{
+                                offset: 0,
+                                color: '#FFD700'
+                            }, {
+                                offset: 1,
+                                color: '#FFA500'
+                            }])
+                        }
+                    })),
+                    label: {
+                        show: true,
+                        position: 'right',
+				    	color: '#fff'
+                    }
+                }]
+            };
+
+            districtChart.setOption(option);
+        }
+
+        // 更新品牌分布图
+        function updateBrandChart(data) {
+            const brandStats = {};
+            data.forEach(item => {
+                if (item.brand) {
+                    brandStats[item.brand] = (brandStats[item.brand] || 0) + 1;
+                }
+            });
+
+            const brandData = Object.entries(brandStats)
+                .sort((a, b) => b[1] - a[1])
+                .map(([name, value]) => ({
+                    name,
+                    value,
+                    itemStyle: {
+                        color: name === '星巴克' ? '#00704A' :
+                               name === '瑞幸咖啡' ? '#00A862' :
+                               name === 'COSTA' ? '#641E16' :
+                               '#FFA500'
+                    }
+                }));
+
+            const option = {
+                tooltip: {
+                    trigger: 'item',
+                    formatter: '{b}: {c} ({d}%)'
+                },
+                legend: {
+                    orient: 'vertical',
+                    right: 10,
+                    top: 'center',
+				        textStyle: {
+				        	color: '#fff'
+				        }
+				    },
+				    series: [{
+                    name: '品牌分布',
+                    type: 'pie',
+                    radius: ['40%', '70%'],
+                    avoidLabelOverlap: false,
+                    itemStyle: {
+                        borderRadius: 10,
+                        borderColor: '#fff',
+                        borderWidth: 2
+                    },
+                    label: {
+                        show: false,
+                        position: 'center'
+                    },
+                    emphasis: {
+				        label: {
+                            show: true,
+                            fontSize: '20',
+                            fontWeight: 'bold'
+                        }
+                    },
+                    labelLine: {
+                        show: false
+                    },
+                    data: brandData
+                }]
+            };
+
+            brandChart.setOption(option);
+        }
+
+        // 更新城市比较图表
+        function updateCityComparisonChart(data) {
+            const cityStats = {};
+            data.forEach(item => {
+                if (!cityStats[item.city]) {
+                    cityStats[item.city] = {
+                        count: 0,
+                        totalRating: 0,
+                        brandCount: 0
+                    };
+                }
+                cityStats[item.city].count++;
+                cityStats[item.city].totalRating += parseFloat(item.value[2]) || 0;
+                if (item.brand) cityStats[item.city].brandCount++;
+            });
+
+            const cities = Object.keys(cityStats);
+            const coffeeIndex = cities.map(city => {
+                const stats = cityStats[city];
+                const avgRating = stats.totalRating / stats.count;
+                const brandRatio = stats.brandCount / stats.count;
+                // 计算咖啡文化指数：店铺数量 * 平均评分 * (1 + 品牌比例)
+                return {
+                    city,
+                    index: (stats.count * avgRating * (1 + brandRatio)).toFixed(2)
+                };
+            }).sort((a, b) => b.index - a.index);
+
+            const option = {
+                tooltip: {
+                    trigger: 'axis',
+                    formatter: function(params) {
+                        return `${params[0].name}<br/>咖啡文化指数: ${params[0].value}`;
+                    }
+                },
+				    grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+				    },
+				    xAxis: {
+                    type: 'value',
+                    name: '咖啡文化指数',
+                    nameTextStyle: {
+                        color: '#fff'
+				    },
+				    axisLabel: {
+			        	color: '#fff'
+			        },
+                    splitLine: {
+                        lineStyle: {
+                            color: 'rgba(255,255,255,0.1)'
+                        }
+                    }
+                },
+                yAxis: {
+                    type: 'category',
+                    data: coffeeIndex.map(item => item.city),
+                    axisLabel: {
+				        	color: '#fff'
+				        }
+				    },
+				    series: [{
+                    name: '咖啡文化指数',
+                    type: 'bar',
+                    data: coffeeIndex.map(item => ({
+                        value: item.index,
+				        itemStyle: {
+                            color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [{
+                                offset: 0,
+                                color: '#FFD700'
+                            }, {
+                                offset: 1,
+                                color: '#FFA500'
+                            }])
+                        }
+                    })),
+                    label: {
+                        show: true,
+                        position: 'right',
+                        color: '#fff'
+				        }
+				    }]
+				};
+
+            cityComparisonChart.setOption(option);
+        }
+
+        // 更新所有图表
+        function updateAllCharts(data) {
+            updateRatingChart(data);
+            updateDistrictChart(data);
+            updateBrandChart(data);
+            updateCityComparisonChart(data);
+        }
+
+        // 读取CSV文件数据
+        async function loadCSVData() {
+            try {
+                const response = await fetch('广东咖啡店信息.csv');
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return await response.text();
+            } catch (error) {
+                console.error('读取CSV文件失败:', error);
+                throw error;
+            }
+        }
+
+        // 解析CSV行，处理可能包含逗号的引号字段
+        function parseCSVLine(line) {
+            const columns = [];
+            let current = '';
+            let inQuotes = false;
+            
+            for (let i = 0; i < line.length; i++) {
+                const char = line[i];
+                
+                if (char === '"' && (i === 0 || line[i-1] === ',')) {
+                    inQuotes = true;
+                } else if (char === '"' && inQuotes && (i === line.length - 1 || line[i+1] === ',')) {
+                    inQuotes = false;
+                } else if (char === ',' && !inQuotes) {
+                    columns.push(current.trim());
+                    current = '';
+                    continue;
+                }
+                
+                if (!(char === '"' && (inQuotes || (!inQuotes && (i === 0 || line[i-1] === ',' || i === line.length - 1 || line[i+1] === ','))))) {
+                    current += char;
+                }
+            }
+            
+            columns.push(current.trim());
+            return columns;
+        }
+
+        // 坐标转换函数：高德地图坐标转百度地图坐标
+        function AMapToBMap(lng, lat) {
+            const x_pi = 3.14159265358979324 * 3000.0 / 180.0;
+            const x = lng;
+            const y = lat;
+            const z = Math.sqrt(x * x + y * y) + 0.00002 * Math.sin(y * x_pi);
+            const theta = Math.atan2(y, x) + 0.000003 * Math.cos(x * x_pi);
+            const bdLng = z * Math.cos(theta) + 0.0065;
+            const bdLat = z * Math.sin(theta) + 0.006;
+            return [bdLng, bdLat];
+        }
+
+        // 搜索和筛选功能
+        function filterData() {
+            const searchText = document.getElementById('searchInput').value.toLowerCase();
+            const selectedDistrict = document.getElementById('districtFilter').value;
+            const selectedRating = parseFloat(document.getElementById('ratingFilter').value) || 0;
+            const selectedCity = document.getElementById('citySelect').value;
+            const selectedBrand = document.getElementById('brandFilter').value;
+
+            const filteredData = allData.filter(item => {
+                const matchesSearch = !searchText || 
+                    item.name.toLowerCase().includes(searchText) || 
+                    item.address.toLowerCase().includes(searchText);
+                const matchesDistrict = !selectedDistrict || item.district === selectedDistrict;
+                const matchesRating = !selectedRating || item.value[2] >= selectedRating;
+                const matchesCity = !selectedCity || selectedCity.includes(item.city);
+                const matchesBrand = !selectedBrand || item.brand === selectedBrand;
+                return matchesSearch && matchesDistrict && matchesRating && matchesCity && matchesBrand;
+            });
+
+            return filteredData;
+        }
+
+        // 过滤并更新所有图表
+        function filterAndUpdateAll() {
+            const filteredData = filterData();
+            updateMap(filteredData);
+            updateRankingList(filteredData);
+            updateAllCharts(filteredData);
+            updateStatistics(filteredData);
+        }
+
+        // 更新统计信息
+        function updateStatistics(data) {
+            const totalCount = data.length;
+            const ratings = data.map(item => item.value[2]).filter(Boolean);
+            const avgRating = ratings.length ? (ratings.reduce((a, b) => a + b, 0) / ratings.length).toFixed(1) : '0.0';
+            const maxRating = ratings.length ? Math.max(...ratings).toFixed(1) : '0.0';
+            const brandCount = data.filter(item => item.brand).length;
+            const brandRatio = totalCount ? ((brandCount / totalCount) * 100).toFixed(1) : '0';
+
+            document.getElementById('total-count').textContent = totalCount;
+            document.getElementById('avg-rating').textContent = avgRating;
+            document.getElementById('max-rating').textContent = maxRating;
+            document.getElementById('brand-ratio').textContent = brandRatio + '%';
+        }
+
+        // 更新排行榜
+        function updateRankingList(data) {
+            const rankingList = document.getElementById('rankingList');
+            const sortedData = [...data].sort((a, b) => b.value[2] - a.value[2]);
+            const top10 = sortedData.slice(0, 10);
+
+            rankingList.innerHTML = top10.map(item => `
+                <div class="ranking-item">
+                    <span class="ranking-name">${item.name}</span>
+                    <span class="ranking-rating">${item.value[2]}★</span>
+                </div>
+            `).join('');
+        }
+
+        // 聚类功能
+        function toggleCluster() {
+            isClusterEnabled = !isClusterEnabled;
+            updateMap(filterData());
+        }
+
+        // 切换热力图
+        function toggleHeatmap() {
+            isHeatmapEnabled = !isHeatmapEnabled;
+            updateMap(filterData());
+        }
+
+        // 更新地图显示
+        function updateMap(data) {
+            if (!mapChart) return;
+
+            let seriesData;
+            if (isHeatmapEnabled) {
+                // 热力图配置
+                seriesData = [{
+                    type: 'heatmap',
+                    coordinateSystem: 'bmap',
+                    data: data.map(item => [
+                        item.value[0],
+                        item.value[1],
+                        item.value[2] * 10  // 放大评分值以增强热力图效果
+                    ]),
+                    pointSize: 15,
+                    blurSize: 20
+                }];
+            } else if (isClusterEnabled) {
+                // 实现简单的网格聚类
+                const gridSize = 0.01; // 约1公里
+                const clusters = new Map();
+
+                data.forEach(item => {
+                    const gridX = Math.floor(item.value[0] / gridSize);
+                    const gridY = Math.floor(item.value[1] / gridSize);
+                    const key = `${gridX},${gridY}`;
+
+                    if (!clusters.has(key)) {
+                        clusters.set(key, {
+                            count: 0,
+                            totalRating: 0,
+                            lng: 0,
+                            lat: 0,
+                            items: []
+                        });
+                    }
+
+                    const cluster = clusters.get(key);
+                    cluster.count++;
+                    cluster.totalRating += item.value[2];
+                    cluster.lng += item.value[0];
+                    cluster.lat += item.value[1];
+                    cluster.items.push(item);
+                });
+
+                seriesData = [{
+                    name: '咖啡店聚类',
+                    type: 'effectScatter',
+                    coordinateSystem: 'bmap',
+                    data: Array.from(clusters.values()).map(cluster => ({
+                        name: `${cluster.count}家咖啡店`,
+                        value: [
+                            cluster.lng / cluster.count,
+                            cluster.lat / cluster.count,
+                            cluster.totalRating / cluster.count
+                        ],
+                        itemStyle: {
+                            color: '#FFD700'
+                        },
+                        symbolSize: Math.min(50, Math.max(20, cluster.count * 5)),
+                        label: {
+                            show: true,
+                            formatter: `${cluster.count}`,
+                            position: 'inside',
+                            color: '#000',
+                            fontWeight: 'bold'
+                        },
+                        emphasis: {
+                            label: {
+                                show: true
+                            }
+                        },
+                        tooltip: {
+                            formatter: function(params) {
+                                const items = cluster.items.map(item => 
+                                    `<div>${item.name}: ${item.value[2]}★</div>`
+                                ).join('');
+                                return `
+                                    <div style="font-size:14px;color:#fff;background:rgba(0,0,0,0.7);padding:10px;border-radius:5px;">
+                                        <div style="margin-bottom:5px;">该区域共有 ${cluster.count} 家咖啡店</div>
+                                        <div style="margin-bottom:5px;">平均评分: ${(cluster.totalRating / cluster.count).toFixed(1)}★</div>
+                                        <div style="max-height:200px;overflow-y:auto;">
+                                            ${items}
+                                        </div>
+                                    </div>
+                                `;
+                            }
+                        }
+                    }))
+                }];
+            } else {
+                seriesData = [{
+                    name: '咖啡店位置',
+                    type: 'effectScatter',
+                    coordinateSystem: 'bmap',
+                    data: data,
+                    symbolSize: function(val) {
+                        return Math.max(8, val[2] * 3);
+                    },
+                    showEffectOn: 'emphasis',
+                    rippleEffect: {
+                        brushType: 'stroke',
+                        scale: 2.5,
+                        period: 4
+                    },
+                    label: {
+                        formatter: '{b}',
+                        position: 'right',
+                        show: false,
+                        color: '#fff',
+                        fontSize: 11,
+                        fontWeight: 'bold',
+                        textBorderColor: '#000',
+                        textBorderWidth: 1
+                    },
+                    itemStyle: {
+                        color: '#FFD700',
+                        shadowBlur: 10,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    },
+                    emphasis: {
+                        label: {
+                            show: true
+                        },
+                        itemStyle: {
+                            borderColor: '#fff',
+                            borderWidth: 2
+                        }
+                    },
+                    tooltip: {
+                        formatter: function(params) {
+                            const data = params.data;
+                            const brand = data.brand ? `<br/><strong>品牌：</strong>${data.brand}` : '';
+                            const tel = data.tel ? `<br/><strong>电话：</strong>${data.tel}` : '';
+                            const time = `<br/><strong>营业时间：</strong>${data.time}`;
+                            const type = `<br/><strong>类型：</strong>${data.type}`;
+                            return `
+                                <div style="background: rgba(0,0,0,0.9); padding: 15px; border-radius: 8px; color: white; font-size: 13px; line-height: 1.6;">
+                                    <div style="color: #FFD700; font-size: 16px; font-weight: bold; margin-bottom: 8px;">${data.name}</div>
+                                    <strong>城市：</strong>${data.city}
+                                    <br/><strong>地址：</strong>${data.address}
+                                    <br/><strong>区域：</strong>${data.district}
+                                    <br/><strong>评分：</strong><span style="color: #FFD700;">${data.value[2]} ★</span>
+                                    ${brand}${tel}${time}${type}
+                                </div>
+                            `;
+                        }
+                    }
+                }];
+            }
+
+            const option = {
+                title: {
+                    text: '广东省咖啡店分布',
+                    subtext: `共 ${data.length} 家咖啡店`,
+                    left: 'center',
+                    top: 20,
+                    textStyle: {
+                        color: '#fff',
+                        fontSize: 18,
+                        fontWeight: 'bold'
+                    },
+                    subtextStyle: {
+                        color: '#ccc',
+                        fontSize: 14
+                    }
+                },
+                bmap: {
+                    center: [113.280637, 23.125178],  // 广东省中心位置
+                    zoom: 8,
+                    roam: true,
+                    mapStyle: {
+                        styleJson: [{
+                            'featureType': 'water',
+                            'elementType': 'all',
+                            'stylers': {
+                                'color': '#044161'
+                            }
+                        }, {
+                            'featureType': 'land',
+                            'elementType': 'all',
+                            'stylers': {
+                                'color': '#091934'
+                            }
+                        }, {
+                            'featureType': 'boundary',
+                            'elementType': 'geometry',
+                            'stylers': {
+                                'color': '#064f85'
+                            }
+                        }, {
+                            'featureType': 'railway',
+                            'elementType': 'all',
+                            'stylers': {
+                                'visibility': 'off'
+                            }
+                        }, {
+                            'featureType': 'highway',
+                            'elementType': 'geometry',
+                            'stylers': {
+                                'color': '#004981'
+                            }
+                        }, {
+                            'featureType': 'highway',
+                            'elementType': 'geometry.fill',
+                            'stylers': {
+                                'color': '#005b96',
+                                'lightness': 1
+                            }
+                        }, {
+                            'featureType': 'highway',
+                            'elementType': 'labels',
+                            'stylers': {
+                                'visibility': 'on'
+                            }
+                        }, {
+                            'featureType': 'arterial',
+                            'elementType': 'geometry',
+                            'stylers': {
+                                'color': '#004981'
+                            }
+                        }, {
+                            'featureType': 'arterial',
+                            'elementType': 'geometry.fill',
+                            'stylers': {
+                                'color': '#00508b'
+                            }
+                        }, {
+                            'featureType': 'poi',
+                            'elementType': 'all',
+                            'stylers': {
+                                'visibility': 'off'
+                            }
+                        }, {
+                            'featureType': 'green',
+                            'elementType': 'all',
+                            'stylers': {
+                                'color': '#056197',
+                                'visibility': 'off'
+                            }
+                        }, {
+                            'featureType': 'subway',
+                            'elementType': 'all',
+                            'stylers': {
+                                'visibility': 'off'
+                            }
+                        }, {
+                            'featureType': 'manmade',
+                            'elementType': 'all',
+                            'stylers': {
+                                'visibility': 'off'
+                            }
+                        }, {
+                            'featureType': 'local',
+                            'elementType': 'all',
+                            'stylers': {
+                                'visibility': 'off'
+                            }
+                        }, {
+                            'featureType': 'arterial',
+                            'elementType': 'labels',
+                            'stylers': {
+                                'visibility': 'off'
+                            }
+                        }, {
+                            'featureType': 'boundary',
+                            'elementType': 'geometry.fill',
+                            'stylers': {
+                                'color': '#029fd4'
+                            }
+                        }, {
+                            'featureType': 'building',
+                            'elementType': 'all',
+                            'stylers': {
+                                'color': '#1a5787'
+                            }
+                        }, {
+                            'featureType': 'label',
+                            'elementType': 'all',
+                            'stylers': {
+                                'visibility': 'off'
+                            }
+                        }]
+                    }
+                },
+                series: seriesData
+            };
+
+            mapChart.setOption(option);
+        }
+
+        // 初始化区域筛选器
+        function initializeFilters(data) {
+            const districts = [...new Set(data.map(item => item.district))].sort();
+            const districtFilter = document.getElementById('districtFilter');
+            districts.forEach(district => {
+                const option = document.createElement('option');
+                option.value = district;
+                option.textContent = district;
+                districtFilter.appendChild(option);
+            });
+        }
+
+        // 初始化品牌选择器
+        function initializeBrandSelect(data) {
+            const brands = [...new Set(data.map(item => item.brand).filter(Boolean))].sort();
+            const brandSelect = document.getElementById('brandFilter');
+            brands.forEach(brand => {
+                const option = document.createElement('option');
+                option.value = brand;
+                option.textContent = brand;
+                brandSelect.appendChild(option);
+            });
+        }
+
+        // 初始化城市选择器
+        function initializeCitySelect(data) {
+            const cities = [...new Set(data.map(item => item.city))].sort();
+            const citySelect = $('#citySelect');
+            
+            // 清空现有选项
+            citySelect.empty();
+            
+            // 添加城市选项
+            cities.forEach(city => {
+                citySelect.append(new Option(city, city));
+            });
+
+            // 初始化 Select2
+            citySelect.select2({
+                placeholder: '选择城市（可多选）',
+                allowClear: true,
+                width: '100%',
+                language: 'zh-CN',
+                theme: 'default'
+            });
+
+            // 监听选择变化
+            citySelect.on('change', filterAndUpdateAll);
+        }
+
+        // 添加事件监听器
+        function addEventListeners() {
+            document.getElementById('searchInput').addEventListener('input', filterAndUpdateAll);
+            document.getElementById('districtFilter').addEventListener('change', filterAndUpdateAll);
+            document.getElementById('ratingFilter').addEventListener('change', filterAndUpdateAll);
+            document.getElementById('citySelect').addEventListener('change', filterAndUpdateAll);
+            document.getElementById('brandFilter').addEventListener('change', filterAndUpdateAll);
+        }
+
+        async function initializeMap() {
+            try {
+                // 等待确保百度地图API已加载
+                if (typeof BMap === 'undefined') {
+                    throw new Error('百度地图API未加载');
+                }
+
+                // 初始化图表
+                initializeCharts();
+
+                // 加载并解析数据
+                const csvData = await loadCSVData();
+                
+                // 初始化ECharts
+                mapChart = echarts.init(document.getElementById('mapContainer'));
+                
+                // 解析数据并创建地图
+                parseDataAndCreateMap(csvData);
+                
+            } catch (error) {
+                console.error('初始化失败:', error);
+                document.getElementById('loading').innerHTML = `
+                    <div style="color: #ff6b6b; text-align: center;">
+                        <h4>加载失败</h4>
+                        <p>${error.message}</p>
+                        <p style="font-size: 12px; margin-top: 10px;">错误详情: ${error.stack}</p>
+                    </div>`;
+            }
+        }
+
+        function parseDataAndCreateMap(csvData) {
+            try {
+                const lines = csvData.trim().split('\n').filter(line => line.trim());
+                
+                if (lines.length === 0) {
+                    throw new Error('CSV文件为空');
+                }
+                
+                const headers = lines[0].split(',').map(h => h.trim());
+                console.log('解析到的表头:', headers);
+                
+                // 找到列的索引
+                const locationIndex = headers.indexOf('经纬度');
+                const nameIndex = headers.indexOf('店名');
+                const addressIndex = headers.indexOf('地址');
+                const ratingIndex = headers.indexOf('评分');
+                const districtIndex = headers.indexOf('区域');
+                const cityIndex = headers.indexOf('城市');
+                const brandIndex = headers.indexOf('品牌');
+                const timeIndex = headers.indexOf('营业时间');
+                const typeIndex = headers.indexOf('类型');
+                const telIndex = headers.indexOf('电话');
+
+                if (locationIndex === -1 || nameIndex === -1) {
+                    throw new Error('CSV文件缺少必要的列（经纬度或店名）');
+                }
+
+                const mapData = [];
+                let totalRating = 0;
+                let maxRating = 0;
+                let validDataCount = 0;
+                let centerLng = 0, centerLat = 0;
+
+                for(let i = 1; i < lines.length; i++) {
+                    const line = lines[i].trim();
+                    if(!line) continue;
+                    
+                    const columns = parseCSVLine(line);
+                    
+                    if (columns.length <= Math.max(locationIndex, nameIndex)) {
+                        console.log('跳过行（列数不足）:', line);
+                        continue;
+                    }
+                    
+                    const locationStr = columns[locationIndex];
+                    if(!locationStr || locationStr === '[]') continue;
+                    
+                    const [amapLng, amapLat] = locationStr.split(',').map(coord => parseFloat(coord.trim()));
+                    if(isNaN(amapLng) || isNaN(amapLat)) continue;
+                    
+                    const [bdLng, bdLat] = AMapToBMap(amapLng, amapLat);
+                    
+                    centerLng += bdLng;
+                    centerLat += bdLat;
+                    
+                    const rating = ratingIndex !== -1 ? (parseFloat(columns[ratingIndex]) || 3.0) : 3.0;
+                    totalRating += rating;
+                    maxRating = Math.max(maxRating, rating);
+                    validDataCount++;
+
+                    // 处理电话号码
+                    let tel = telIndex !== -1 ? columns[telIndex] : '';
+                    tel = tel === '[]' ? '' : tel;
+                    
+                    // 处理营业时间
+                    let time = timeIndex !== -1 ? columns[timeIndex] : '';
+                    time = time === '[]' ? '暂无营业时间信息' : (time || '暂无营业时间信息');
+
+                    // 处理类型
+                    let type = typeIndex !== -1 ? columns[typeIndex] : '';
+                    type = type.split(';').pop() || '咖啡厅';
+                    
+                    mapData.push({
+                        name: columns[nameIndex] || '未知咖啡店',
+                        value: [bdLng, bdLat, rating],
+                        address: columns[addressIndex] || '地址未知',
+                        district: columns[districtIndex] || '区域未知',
+                        city: cityIndex !== -1 ? columns[cityIndex] : '全省',
+                        brand: brandIndex !== -1 ? columns[brandIndex] : '',
+                        tel: tel,
+                        time: time,
+                        type: type
+                    });
+                }
+
+                if(mapData.length === 0) {
+                    throw new Error('没有找到有效的地理位置数据');
+                }
+
+                // 保存所有数据并更新图表
+                allData = mapData;
+
+                // 初始化筛选器
+                initializeFilters(mapData);
+                initializeBrandSelect(mapData);
+                initializeCitySelect(mapData);
+                addEventListeners();
+
+                // 更新所有数据显示
+                filterAndUpdateAll();
+                
+                // 获取百度地图实例
+                bmap = mapChart.getModel().getComponent('bmap').getBMap();
+                
+                // 添加控件
+                bmap.addControl(new BMap.MapTypeControl());
+                bmap.addControl(new BMap.ScaleControl());
+                bmap.addControl(new BMap.NavigationControl());
+                
+                // 隐藏加载提示
+                document.getElementById('loading').style.display = 'none';
+                
+            } catch(error) {
+                console.error('数据解析错误:', error);
+                document.getElementById('loading').innerHTML = `
+                    <div style="color: #ff6b6b; text-align: center;">
+                        <h4>数据解析失败！</h4>
+                        <p>${error.message}</p>
+                        <p style="font-size: 12px; margin-top: 10px;">错误详情: ${error.stack}</p>
+                    </div>`;
+            }
+        }
+
+        function toggleView() {
+            if(!bmap) return;
+            currentView = currentView === 'normal' ? 'satellite' : 'normal';
+            bmap.setMapType(currentView === 'normal' ? BMAP_NORMAL_MAP : BMAP_SATELLITE_MAP);
+        }
+
+        function resetZoom() {
+            if(!mapChart || !bmap) return;
+            const option = mapChart.getOption();
+            const center = option.bmap[0].center;
+            bmap.centerAndZoom(new BMap.Point(center[0], center[1]), 13);
+        }
+
+        // 监听窗口大小变化
+        window.addEventListener('resize', function() {
+            if(mapChart) mapChart.resize();
+            if(ratingChart) ratingChart.resize();
+            if(districtChart) districtChart.resize();
+            if(brandChart) brandChart.resize();
+            if(cityComparisonChart) cityComparisonChart.resize();
+        });
+
+        // 等待所有资源加载完成后初始化
+        window.addEventListener('load', function() {
+            setTimeout(initializeMap, 1000);
+			});
+		</script>
+	</body>
+</html>
