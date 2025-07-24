@@ -57,6 +57,7 @@ http://127.0.0.1:5500
 <img width="291" height="646" alt="截屏2025-07-24 上午10 28 43" src="https://github.com/user-attachments/assets/9d2b2f7c-1fe5-4346-b4c0-91a25c3585b4" />
 <img width="273" height="326" alt="截屏2025-07-24 上午10 28 34" src="https://github.com/user-attachments/assets/294c2e0a-20ea-4717-9299-7bcb9dd06f6c" />
 <img width="233" height="254" alt="截屏2025-07-24 上午10 28 27" src="https://github.com/user-attachments/assets/b8b4c4e8-591c-45f8-b7dd-55ffe14ff8b5" />
+
 ### 依赖说明
 - [jQuery 3.6+](https://code.jquery.com/)
 - [Select2 4.1+](https://select2.org/)
