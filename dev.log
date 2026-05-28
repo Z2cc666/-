@@ -1,0 +1,11 @@
+
+> medical-chatbot-frontend@0.1.0 dev
+> vite --host 127.0.0.1 --port 3001
+
+[33mThe CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.[39m
+error when starting dev server:
+Error: listen EPERM: operation not permitted 127.0.0.1:3001
+    at Server.setupListenHandle [as _listen2] (node:net:1915:21)
+    at listenInCluster (node:net:1994:12)
+    at node:net:2203:7
+    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)
