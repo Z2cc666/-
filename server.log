@@ -1,0 +1,207 @@
+ * Serving Flask app 'main'
+ * Debug mode: on
+2025-12-21 11:03:07,219 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+2025-12-21 11:03:07,219 - INFO - [33mPress CTRL+C to quit[0m
+2025-12-21 11:03:07,220 - INFO -  * Restarting with stat
+2025-12-21 11:03:07,999 - WARNING -  * Debugger is active!
+2025-12-21 11:03:08,004 - INFO -  * Debugger PIN: 559-280-201
+2025-12-21 11:03:46,626 - INFO - 127.0.0.1 - - [21/Dec/2025 11:03:46] "OPTIONS /ask HTTP/1.1" 200 -
+2025-12-21 11:03:46,630 - INFO - 收到问题: 咳嗽怎么办...
+2025-12-21 11:03:47,370 - INFO - HTTP Request: POST http://127.0.0.1:11434/api/embed "HTTP/1.1 200 OK"
+2025-12-21 11:03:47,403 - INFO - 检索到5条相关文档
+2025-12-21 11:03:51,290 - INFO - HTTP Request: POST http://127.0.0.1:11434/api/generate "HTTP/1.1 200 OK"
+2025-12-21 11:04:09,944 - INFO - 127.0.0.1 - - [21/Dec/2025 11:04:09] "POST /ask HTTP/1.1" 200 -
+2025-12-21 11:10:37,509 - INFO - 127.0.0.1 - - [21/Dec/2025 11:10:37] "OPTIONS /ask HTTP/1.1" 200 -
+2025-12-21 11:10:37,513 - INFO - 收到问题: 练完背部，斜方肌酸怎么办...
+2025-12-21 11:10:38,470 - INFO - HTTP Request: POST http://127.0.0.1:11434/api/embed "HTTP/1.1 200 OK"
+2025-12-21 11:10:38,515 - INFO - 检索到5条相关文档
+2025-12-21 11:10:42,477 - INFO - HTTP Request: POST http://127.0.0.1:11434/api/generate "HTTP/1.1 200 OK"
+2025-12-21 11:10:51,351 - INFO - 127.0.0.1 - - [21/Dec/2025 11:10:51] "POST /ask HTTP/1.1" 200 -
+2025-12-21 11:12:42,616 - INFO - 127.0.0.1 - - [21/Dec/2025 11:12:42] "OPTIONS /register HTTP/1.1" 200 -
+2025-12-21 11:12:42,703 - INFO - 新用户注册 (db): zhuohuazhong0831@191email.com
+2025-12-21 11:12:42,704 - INFO - 127.0.0.1 - - [21/Dec/2025 11:12:42] "POST /register HTTP/1.1" 200 -
+2025-12-21 11:14:14,504 - INFO -  * Detected change in '/Users/z2cc/Desktop/medical_chatbot-main 2/server/main.py', reloading
+2025-12-21 11:14:14,819 - INFO -  * Restarting with stat
+2025-12-21 11:14:15,953 - WARNING -  * Debugger is active!
+2025-12-21 11:14:15,958 - INFO -  * Debugger PIN: 559-280-201
+2025-12-21 11:14:32,502 - INFO -  * Detected change in '/Users/z2cc/Desktop/medical_chatbot-main 2/server/main.py', reloading
+2025-12-21 11:14:32,742 - INFO -  * Restarting with stat
+2025-12-21 11:14:33,652 - WARNING -  * Debugger is active!
+2025-12-21 11:14:33,661 - INFO -  * Debugger PIN: 559-280-201
+2025-12-21 11:15:55,075 - INFO - 127.0.0.1 - - [21/Dec/2025 11:15:55] "OPTIONS /profile HTTP/1.1" 200 -
+2025-12-21 11:15:55,078 - INFO - 127.0.0.1 - - [21/Dec/2025 11:15:55] "GET /profile HTTP/1.1" 200 -
+2025-12-21 11:16:02,569 - INFO -  * Detected change in '/Users/z2cc/Desktop/medical_chatbot-main 2/server/main.py', reloading
+2025-12-21 11:16:02,691 - INFO -  * Restarting with stat
+2025-12-21 11:16:03,530 - WARNING -  * Debugger is active!
+2025-12-21 11:16:03,542 - INFO -  * Debugger PIN: 559-280-201
+2025-12-21 11:20:23,114 - INFO - 127.0.0.1 - - [21/Dec/2025 11:20:23] "OPTIONS /profile HTTP/1.1" 200 -
+2025-12-21 11:20:23,116 - INFO - 127.0.0.1 - - [21/Dec/2025 11:20:23] "GET /profile HTTP/1.1" 200 -
+2025-12-21 11:24:15,866 - INFO - 127.0.0.1 - - [21/Dec/2025 11:24:15] "OPTIONS /profile HTTP/1.1" 200 -
+2025-12-21 11:24:15,868 - INFO - 127.0.0.1 - - [21/Dec/2025 11:24:15] "GET /profile HTTP/1.1" 200 -
+2025-12-22 10:02:36,134 - INFO - 127.0.0.1 - - [22/Dec/2025 10:02:36] "POST /upload-avatar HTTP/1.1" 200 -
+2025-12-22 10:02:38,484 - INFO - 127.0.0.1 - - [22/Dec/2025 10:02:38] "OPTIONS /profile HTTP/1.1" 200 -
+2025-12-22 10:02:38,490 - INFO - 127.0.0.1 - - [22/Dec/2025 10:02:38] "POST /profile HTTP/1.1" 200 -
+2025-12-22 10:13:11,347 - INFO - 127.0.0.1 - - [22/Dec/2025 10:13:11] "OPTIONS /profile HTTP/1.1" 200 -
+2025-12-22 10:13:11,351 - INFO - 127.0.0.1 - - [22/Dec/2025 10:13:11] "GET /profile HTTP/1.1" 200 -
+2025-12-22 10:15:42,363 - INFO - 127.0.0.1 - - [22/Dec/2025 10:15:42] "OPTIONS /profile HTTP/1.1" 200 -
+2025-12-22 10:15:42,367 - INFO - 127.0.0.1 - - [22/Dec/2025 10:15:42] "GET /profile HTTP/1.1" 200 -
+2025-12-22 10:15:46,674 - INFO - 127.0.0.1 - - [22/Dec/2025 10:15:46] "GET /profile HTTP/1.1" 200 -
+2025-12-22 10:31:42,284 - INFO - 127.0.0.1 - - [22/Dec/2025 10:31:42] "OPTIONS /ask HTTP/1.1" 200 -
+2025-12-22 10:31:42,288 - INFO - 收到问题 (user=zhuohuazhong0831@191email.com): 如何锻炼胸肌...
+2025-12-22 10:31:43,348 - INFO - HTTP Request: POST http://127.0.0.1:11434/api/embed "HTTP/1.1 200 OK"
+2025-12-22 10:31:43,384 - INFO - 检索到5条相关文档
+2025-12-22 10:31:48,182 - INFO - HTTP Request: POST http://127.0.0.1:11434/api/generate "HTTP/1.1 200 OK"
+2025-12-22 10:32:03,321 - INFO - 127.0.0.1 - - [22/Dec/2025 10:32:03] "POST /ask HTTP/1.1" 200 -
+2025-12-22 10:35:26,508 - INFO - 127.0.0.1 - - [22/Dec/2025 10:35:26] "OPTIONS /register HTTP/1.1" 200 -
+2025-12-22 10:35:26,587 - INFO - 127.0.0.1 - - [22/Dec/2025 10:35:26] "[31m[1mPOST /register HTTP/1.1[0m" 400 -
+2025-12-22 10:35:47,184 - INFO - 127.0.0.1 - - [22/Dec/2025 10:35:47] "OPTIONS /register HTTP/1.1" 200 -
+2025-12-22 10:35:47,269 - INFO - 新用户注册 (db): 2747325606@qq.com
+2025-12-22 10:35:47,270 - INFO - 127.0.0.1 - - [22/Dec/2025 10:35:47] "POST /register HTTP/1.1" 200 -
+2025-12-22 10:35:50,483 - INFO - 127.0.0.1 - - [22/Dec/2025 10:35:50] "OPTIONS /profile HTTP/1.1" 200 -
+2025-12-22 10:35:50,484 - INFO - 127.0.0.1 - - [22/Dec/2025 10:35:50] "OPTIONS /profile HTTP/1.1" 200 -
+2025-12-22 10:35:50,486 - INFO - 127.0.0.1 - - [22/Dec/2025 10:35:50] "GET /profile HTTP/1.1" 200 -
+2025-12-22 10:35:50,488 - INFO - 127.0.0.1 - - [22/Dec/2025 10:35:50] "GET /profile HTTP/1.1" 200 -
+2025-12-22 10:36:06,385 - INFO - 127.0.0.1 - - [22/Dec/2025 10:36:06] "OPTIONS /ask HTTP/1.1" 200 -
+2025-12-22 10:36:06,390 - INFO - 收到问题 (user=2747325606@qq.com): 感冒怎么办
+...
+2025-12-22 10:36:06,495 - INFO - HTTP Request: POST http://127.0.0.1:11434/api/embed "HTTP/1.1 200 OK"
+2025-12-22 10:36:06,508 - INFO - 检索到5条相关文档
+2025-12-22 10:36:08,771 - INFO - HTTP Request: POST http://127.0.0.1:11434/api/generate "HTTP/1.1 200 OK"
+2025-12-22 10:36:19,571 - INFO - 127.0.0.1 - - [22/Dec/2025 10:36:19] "POST /ask HTTP/1.1" 200 -
+2025-12-22 10:38:54,634 - INFO - 127.0.0.1 - - [22/Dec/2025 10:38:54] "OPTIONS /ask HTTP/1.1" 200 -
+2025-12-22 10:38:54,637 - INFO - 收到问题 (user=2747325606@qq.com): 落枕怎么办
+...
+2025-12-22 10:38:54,724 - INFO - HTTP Request: POST http://127.0.0.1:11434/api/embed "HTTP/1.1 200 OK"
+2025-12-22 10:38:54,729 - INFO - 检索到5条相关文档
+2025-12-22 10:38:55,001 - INFO - HTTP Request: POST http://127.0.0.1:11434/api/generate "HTTP/1.1 200 OK"
+2025-12-22 10:39:07,396 - INFO - 127.0.0.1 - - [22/Dec/2025 10:39:07] "POST /ask HTTP/1.1" 200 -
+2025-12-22 10:39:49,942 - INFO -  * Detected change in '/Users/z2cc/Desktop/medical_chatbot-main 2/server/main.py', reloading
+2025-12-22 10:39:50,366 - INFO -  * Restarting with stat
+2025-12-22 10:39:51,390 - WARNING -  * Debugger is active!
+2025-12-22 10:39:51,396 - INFO -  * Debugger PIN: 559-280-201
+2025-12-22 10:40:36,972 - INFO -  * Detected change in '/Users/z2cc/Desktop/medical_chatbot-main 2/server/main.py', reloading
+2025-12-22 10:40:37,508 - INFO -  * Restarting with stat
+2025-12-22 10:40:38,483 - WARNING -  * Debugger is active!
+2025-12-22 10:40:38,489 - INFO -  * Debugger PIN: 559-280-201
+2025-12-22 10:41:09,464 - INFO -  * Detected change in '/Users/z2cc/Desktop/medical_chatbot-main 2/server/main.py', reloading
+2025-12-22 10:41:10,057 - INFO -  * Restarting with stat
+2025-12-22 10:41:11,026 - WARNING -  * Debugger is active!
+2025-12-22 10:41:11,031 - INFO -  * Debugger PIN: 559-280-201
+2025-12-22 10:42:10,249 - INFO - 127.0.0.1 - - [22/Dec/2025 10:42:10] "OPTIONS /ask_stream HTTP/1.1" 200 -
+2025-12-22 10:42:10,253 - INFO - 收到流式问题: 落枕怎么办
+...
+2025-12-22 10:42:10,339 - INFO - HTTP Request: POST http://127.0.0.1:11434/api/embed "HTTP/1.1 200 OK"
+2025-12-22 10:42:10,502 - INFO - HTTP Request: POST http://127.0.0.1:11434/api/generate "HTTP/1.1 200 OK"
+2025-12-22 10:42:23,762 - INFO - 127.0.0.1 - - [22/Dec/2025 10:42:23] "POST /ask_stream HTTP/1.1" 200 -
+2025-12-22 10:43:05,642 - INFO - 127.0.0.1 - - [22/Dec/2025 10:43:05] "OPTIONS /profile HTTP/1.1" 200 -
+2025-12-22 10:43:05,643 - INFO - 127.0.0.1 - - [22/Dec/2025 10:43:05] "OPTIONS /profile HTTP/1.1" 200 -
+2025-12-22 10:43:05,648 - INFO - 127.0.0.1 - - [22/Dec/2025 10:43:05] "GET /profile HTTP/1.1" 200 -
+2025-12-22 10:43:05,651 - INFO - 127.0.0.1 - - [22/Dec/2025 10:43:05] "GET /profile HTTP/1.1" 200 -
+2025-12-22 10:43:23,909 - INFO - 127.0.0.1 - - [22/Dec/2025 10:43:23] "OPTIONS /profile HTTP/1.1" 200 -
+2025-12-22 10:43:23,915 - INFO - 127.0.0.1 - - [22/Dec/2025 10:43:23] "POST /profile HTTP/1.1" 200 -
+2025-12-22 10:44:46,129 - INFO -  * Detected change in '/Users/z2cc/Desktop/medical_chatbot-main 2/server/model.py', reloading
+2025-12-22 10:44:46,409 - INFO -  * Restarting with stat
+2025-12-22 10:44:47,428 - WARNING -  * Debugger is active!
+2025-12-22 10:44:47,433 - INFO -  * Debugger PIN: 559-280-201
+2025-12-22 10:44:47,450 - INFO - 127.0.0.1 - - [22/Dec/2025 10:44:47] "OPTIONS /profile HTTP/1.1" 200 -
+2025-12-22 10:44:47,451 - INFO - 127.0.0.1 - - [22/Dec/2025 10:44:47] "OPTIONS /profile HTTP/1.1" 200 -
+2025-12-22 10:44:47,453 - INFO - 127.0.0.1 - - [22/Dec/2025 10:44:47] "GET /profile HTTP/1.1" 200 -
+2025-12-22 10:44:47,454 - INFO - 127.0.0.1 - - [22/Dec/2025 10:44:47] "GET /profile HTTP/1.1" 200 -
+2025-12-22 10:48:20,494 - INFO - 127.0.0.1 - - [22/Dec/2025 10:48:20] "OPTIONS /profile HTTP/1.1" 200 -
+2025-12-22 10:48:20,495 - INFO - 127.0.0.1 - - [22/Dec/2025 10:48:20] "OPTIONS /profile HTTP/1.1" 200 -
+2025-12-22 10:48:20,497 - INFO - 127.0.0.1 - - [22/Dec/2025 10:48:20] "GET /profile HTTP/1.1" 200 -
+2025-12-22 10:48:20,498 - INFO - 127.0.0.1 - - [22/Dec/2025 10:48:20] "GET /profile HTTP/1.1" 200 -
+2025-12-22 10:48:21,004 - INFO - 127.0.0.1 - - [22/Dec/2025 10:48:21] "GET /profile HTTP/1.1" 200 -
+2025-12-22 10:48:21,005 - INFO - 127.0.0.1 - - [22/Dec/2025 10:48:21] "GET /profile HTTP/1.1" 200 -
+2025-12-22 10:48:21,169 - INFO - 127.0.0.1 - - [22/Dec/2025 10:48:21] "GET /profile HTTP/1.1" 200 -
+2025-12-22 10:48:21,171 - INFO - 127.0.0.1 - - [22/Dec/2025 10:48:21] "GET /profile HTTP/1.1" 200 -
+2025-12-22 10:48:24,383 - INFO - 127.0.0.1 - - [22/Dec/2025 10:48:24] "GET /profile HTTP/1.1" 200 -
+2025-12-22 10:48:24,388 - INFO - 127.0.0.1 - - [22/Dec/2025 10:48:24] "GET /profile HTTP/1.1" 200 -
+2025-12-22 10:49:28,387 - INFO - 127.0.0.1 - - [22/Dec/2025 10:49:28] "OPTIONS /profile HTTP/1.1" 200 -
+2025-12-22 10:49:28,388 - INFO - 127.0.0.1 - - [22/Dec/2025 10:49:28] "OPTIONS /profile HTTP/1.1" 200 -
+2025-12-22 10:49:28,392 - INFO - 127.0.0.1 - - [22/Dec/2025 10:49:28] "GET /profile HTTP/1.1" 200 -
+2025-12-22 10:49:28,394 - INFO - 127.0.0.1 - - [22/Dec/2025 10:49:28] "GET /profile HTTP/1.1" 200 -
+2025-12-22 10:51:58,321 - INFO - 127.0.0.1 - - [22/Dec/2025 10:51:58] "OPTIONS /profile HTTP/1.1" 200 -
+2025-12-22 10:51:58,322 - INFO - 127.0.0.1 - - [22/Dec/2025 10:51:58] "OPTIONS /profile HTTP/1.1" 200 -
+2025-12-22 10:51:58,324 - INFO - 127.0.0.1 - - [22/Dec/2025 10:51:58] "GET /profile HTTP/1.1" 200 -
+2025-12-22 10:51:58,325 - INFO - 127.0.0.1 - - [22/Dec/2025 10:51:58] "GET /profile HTTP/1.1" 200 -
+2025-12-22 10:51:58,854 - INFO - 127.0.0.1 - - [22/Dec/2025 10:51:58] "GET /profile HTTP/1.1" 200 -
+2025-12-22 10:51:58,855 - INFO - 127.0.0.1 - - [22/Dec/2025 10:51:58] "GET /profile HTTP/1.1" 200 -
+2025-12-22 10:52:06,919 - INFO - 127.0.0.1 - - [22/Dec/2025 10:52:06] "OPTIONS /profile HTTP/1.1" 200 -
+2025-12-22 10:52:06,921 - INFO - 127.0.0.1 - - [22/Dec/2025 10:52:06] "OPTIONS /profile HTTP/1.1" 200 -
+2025-12-22 10:52:06,925 - INFO - 127.0.0.1 - - [22/Dec/2025 10:52:06] "GET /profile HTTP/1.1" 200 -
+2025-12-22 10:52:06,929 - INFO - 127.0.0.1 - - [22/Dec/2025 10:52:06] "GET /profile HTTP/1.1" 200 -
+2025-12-22 10:52:15,994 - INFO - 127.0.0.1 - - [22/Dec/2025 10:52:15] "POST /upload-avatar HTTP/1.1" 200 -
+2025-12-22 10:52:16,008 - INFO - 127.0.0.1 - - [22/Dec/2025 10:52:16] "[35m[1mGET /uploads/1766371935_截屏2025-09-23%20上午9.40.39.png HTTP/1.1[0m" 500 -
+Traceback (most recent call last):
+  File "/Users/z2cc/Desktop/medical_chatbot-main 2/venv/lib/python3.13/site-packages/flask/app.py", line 1536, in __call__
+    return self.wsgi_app(environ, start_response)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/z2cc/Desktop/medical_chatbot-main 2/venv/lib/python3.13/site-packages/flask/app.py", line 1514, in wsgi_app
+    response = self.handle_exception(e)
+  File "/Users/z2cc/Desktop/medical_chatbot-main 2/venv/lib/python3.13/site-packages/flask_cors/extension.py", line 176, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+                                                ~^^^^^^^^^^^^^^^^^
+  File "/Users/z2cc/Desktop/medical_chatbot-main 2/venv/lib/python3.13/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Users/z2cc/Desktop/medical_chatbot-main 2/venv/lib/python3.13/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Users/z2cc/Desktop/medical_chatbot-main 2/venv/lib/python3.13/site-packages/flask_cors/extension.py", line 176, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+                                                ~^^^^^^^^^^^^^^^^^
+  File "/Users/z2cc/Desktop/medical_chatbot-main 2/venv/lib/python3.13/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Users/z2cc/Desktop/medical_chatbot-main 2/venv/lib/python3.13/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/Users/z2cc/Desktop/medical_chatbot-main 2/server/main.py", line 255, in serve_upload
+    return app.send_from_directory(uploads_dir, filename)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Flask' object has no attribute 'send_from_directory'
+2025-12-22 11:15:14,459 - INFO - 127.0.0.1 - - [22/Dec/2025 11:15:14] "OPTIONS /profile HTTP/1.1" 200 -
+2025-12-22 11:15:14,459 - INFO - 127.0.0.1 - - [22/Dec/2025 11:15:14] "OPTIONS /profile HTTP/1.1" 200 -
+2025-12-22 11:15:14,460 - INFO - 127.0.0.1 - - [22/Dec/2025 11:15:14] "GET /profile HTTP/1.1" 200 -
+2025-12-22 11:15:14,461 - INFO - 127.0.0.1 - - [22/Dec/2025 11:15:14] "GET /profile HTTP/1.1" 200 -
+2025-12-22 12:16:17,181 - INFO - 127.0.0.1 - - [22/Dec/2025 12:16:17] "OPTIONS /profile HTTP/1.1" 200 -
+2025-12-22 12:16:17,182 - INFO - 127.0.0.1 - - [22/Dec/2025 12:16:17] "OPTIONS /profile HTTP/1.1" 200 -
+2025-12-22 12:16:17,184 - INFO - 127.0.0.1 - - [22/Dec/2025 12:16:17] "GET /profile HTTP/1.1" 200 -
+2025-12-22 12:16:17,185 - INFO - 127.0.0.1 - - [22/Dec/2025 12:16:17] "GET /profile HTTP/1.1" 200 -
+2025-12-22 17:57:59,540 - INFO - 127.0.0.1 - - [22/Dec/2025 17:57:59] "OPTIONS /profile HTTP/1.1" 200 -
+2025-12-22 17:57:59,540 - INFO - 127.0.0.1 - - [22/Dec/2025 17:57:59] "OPTIONS /profile HTTP/1.1" 200 -
+2025-12-22 17:57:59,551 - INFO - 127.0.0.1 - - [22/Dec/2025 17:57:59] "GET /profile HTTP/1.1" 200 -
+2025-12-22 17:57:59,552 - INFO - 127.0.0.1 - - [22/Dec/2025 17:57:59] "GET /profile HTTP/1.1" 200 -
+2025-12-22 22:39:40,175 - INFO - 127.0.0.1 - - [22/Dec/2025 22:39:40] "OPTIONS /profile HTTP/1.1" 200 -
+2025-12-22 22:39:40,176 - INFO - 127.0.0.1 - - [22/Dec/2025 22:39:40] "OPTIONS /profile HTTP/1.1" 200 -
+2025-12-22 22:39:40,177 - INFO - 127.0.0.1 - - [22/Dec/2025 22:39:40] "GET /profile HTTP/1.1" 200 -
+2025-12-22 22:39:40,178 - INFO - 127.0.0.1 - - [22/Dec/2025 22:39:40] "GET /profile HTTP/1.1" 200 -
+2025-12-22 22:39:54,345 - INFO - 127.0.0.1 - - [22/Dec/2025 22:39:54] "OPTIONS /ask_stream HTTP/1.1" 200 -
+2025-12-22 22:39:54,348 - INFO - 收到流式问题: 怎么锻炼背部
+...
+2025-12-22 22:39:55,361 - INFO - HTTP Request: POST http://127.0.0.1:11434/api/embed "HTTP/1.1 200 OK"
+2025-12-22 22:40:00,109 - INFO - HTTP Request: POST http://127.0.0.1:11434/api/generate "HTTP/1.1 200 OK"
+2025-12-22 22:40:09,504 - INFO - 127.0.0.1 - - [22/Dec/2025 22:40:09] "POST /ask_stream HTTP/1.1" 200 -
+2025-12-23 14:28:40,795 - INFO -  * Detected change in '/Users/z2cc/Desktop/medical_chatbot-main 2/server/main.py', reloading
+2025-12-23 14:28:41,030 - INFO -  * Restarting with stat
+2025-12-23 14:28:42,122 - WARNING -  * Debugger is active!
+2025-12-23 14:28:42,128 - INFO -  * Debugger PIN: 559-280-201
+2025-12-23 14:28:44,209 - INFO -  * Detected change in '/Users/z2cc/Desktop/medical_chatbot-main 2/server/model.py', reloading
+2025-12-23 14:28:44,902 - INFO -  * Restarting with stat
+2025-12-23 14:28:45,575 - WARNING -  * Debugger is active!
+2025-12-23 14:28:45,579 - INFO -  * Debugger PIN: 559-280-201
+2025-12-23 14:29:24,158 - INFO - 127.0.0.1 - - [23/Dec/2025 14:29:24] "OPTIONS /ask HTTP/1.1" 200 -
+2025-12-23 14:29:24,160 - WARNING - 令牌已过期
+2025-12-23 14:29:24,160 - INFO - 收到问题: 感冒怎么办...
+2025-12-23 14:29:24,846 - INFO - HTTP Request: POST http://127.0.0.1:11434/api/embed "HTTP/1.1 200 OK"
+2025-12-23 14:29:24,870 - INFO - 检索到5条相关文档
+2025-12-23 14:29:29,083 - INFO - HTTP Request: POST http://127.0.0.1:11434/api/generate "HTTP/1.1 200 OK"
+2025-12-23 14:29:45,570 - INFO - 127.0.0.1 - - [23/Dec/2025 14:29:45] "POST /ask HTTP/1.1" 200 -
+2025-12-23 14:40:43,684 - INFO - 127.0.0.1 - - [23/Dec/2025 14:40:43] "OPTIONS /ask HTTP/1.1" 200 -
+2025-12-23 14:40:43,693 - WARNING - 令牌已过期
+2025-12-23 14:40:43,694 - INFO - 收到问题: 感冒怎么办...
+2025-12-23 14:40:44,450 - INFO - HTTP Request: POST http://127.0.0.1:11434/api/embed "HTTP/1.1 200 OK"
+2025-12-23 14:40:44,485 - INFO - 检索到5条相关文档
+2025-12-23 14:40:48,771 - INFO - HTTP Request: POST http://127.0.0.1:11434/api/generate "HTTP/1.1 200 OK"
+2025-12-23 14:40:59,780 - INFO - 127.0.0.1 - - [23/Dec/2025 14:40:59] "POST /ask HTTP/1.1" 200 -
+/opt/homebrew/Cellar/python@3.13/3.13.5/Frameworks/Python.framework/Versions/3.13/lib/python3.13/multiprocessing/resource_tracker.py:301: UserWarning: resource_tracker: There appear to be 1 leaked semaphore objects to clean up at shutdown: {'/mp-wqh56rwg'}
+  warnings.warn(
